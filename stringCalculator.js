@@ -17,7 +17,7 @@ function stringCalculator(string) {
       result += parseInt(number[i]);
     }
     if (number[i] < 0) {
-      return "negatives not allowed " + negatives;
+      throw new Error("negatives not allowed " + negatives);
     }
   }
 

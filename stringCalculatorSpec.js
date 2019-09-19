@@ -30,20 +30,24 @@ describe("String calculator", function() {
     expect(result).toEqual(3);
   });
   it("should add function with a negative should throw an error 'negative not allowed' and the negative that was passed", function() {
-    let result = stringCalculator("-5");
-    expect(result).toEqual("negatives not allowed " + [-5]);
-    result = stringCalculator("-5,-3,-8,-3,-13,12");
-    expect(result).toEqual("negatives not allowed " + [-5, -3, -8, -3, -13]);
-    result = stringCalculator("9,-5,8,-8,9,-10");
-    expect(result).toEqual("negatives not allowed " + [-5, -8, -10]);
+    expect(function() {
+      stringCalculator("-5");
+    }).toThrow(new Error("negatives not allowed " + [-5]));
+    expect(function() {
+      stringCalculator("-5,-3,-8,-3,-13,12");
+    }).toThrow(new Error("negatives not allowed " + [-5, -3, -8, -3, -13]));
+    expect(function() {
+      stringCalculator("9,-5,8,-8,9,-10");
+    }).toThrow(new Error("negatives not allowed " + [-5, -8, -10]));
   });
   it("number bigger than 1000 should be ignored", function() {
     let result = stringCalculator("10001");
     expect(result).toEqual(0);
     result = stringCalculator("1001,9,1,9,2");
     expect(result).toEqual(21);
-    result = stringCalculator("-10,2000,9,1");
-    expect(result).toEqual("negatives not allowed " + [-10]);
+    expect(function() {
+      stringCalculator("-10,2000,9,1");
+    }).toThrow(new Error("negatives not allowed " + [-10]));
   });
   it("be able to handle multiple delimiters of any length", function() {
     let result = stringCalculator("//[***]\n1***2***3");
